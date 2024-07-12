@@ -52,7 +52,7 @@ class SubjectInfoCubit extends Cubit<List<Subject>> {
     for (var subject in state) {
       totalCredits += subject.creditValue;
       totalGradePoints +=
-          _calculateGradePoints(subject.grade!) * subject.creditValue;
+          _calculateGradePoints(subject.grade) * subject.creditValue;
     }
 
     if (totalCredits > 0) {

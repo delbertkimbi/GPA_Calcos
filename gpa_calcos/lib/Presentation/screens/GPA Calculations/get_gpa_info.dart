@@ -171,7 +171,7 @@ class _GetSubjectInfoState extends State<GetSubjectInfo> {
                                   width: 12.h,
                                 ),
                                 Text(
-                                  subject.grade!,
+                                  subject.grade,
                                   style: TextStyle(
                                     fontSize: 16.sp,
                                     color: MainColors.color1,
