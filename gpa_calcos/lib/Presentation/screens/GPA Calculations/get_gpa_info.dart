@@ -171,7 +171,7 @@ class _GetSubjectInfoState extends State<GetSubjectInfo> {
                                   width: 12.h,
                                 ),
                                 Text(
-                                  subject.grade,
+                                  subject.grade!,
                                   style: TextStyle(
                                     fontSize: 16.sp,
                                     color: MainColors.color1,
@@ -295,21 +295,9 @@ class _GetSubjectInfoState extends State<GetSubjectInfo> {
                                 gpa: gpa),
                           );
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              duration: const Duration(seconds: 1),
-                              content: Text(
-                                "Calculated GPA is outside the valid range (0 - 4). Croscheck your inputs",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 15.sp,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              backgroundColor: Colors.red,
-                            ),
-                          );
+                          showToast(
+                              message:
+                                  'Calculated GPA is outside the valid range (0 - 4).');
                         }
                       },
                       child: RegisterButton(

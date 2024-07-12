@@ -1,6 +1,6 @@
 class Subject {
   final String name;
-  final String grade;
+  final String? grade;
   final double creditValue;
 
   Subject({

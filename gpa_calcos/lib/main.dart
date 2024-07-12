@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gpa_calcos/Bussiness/calculation/GetUserInfoCubit/subject_info_cubit_cubit.dart';
 import 'package:gpa_calcos/Bussiness/calculation/gpa_cubit/gpa_cubit.dart';
 import 'package:gpa_calcos/Bussiness/user_cubit/user_cubit.dart';
 import 'package:gpa_calcos/Presentation/Custom/files/key.dart';
@@ -20,7 +21,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   Gemini.init(apiKey: GEMINI_API_KEY);
-  runApp(MultiBlocProvider(providers: [
+  runApp(
+  MultiBlocProvider(providers: [
+    BlocProvider(create: (context)=>SubjectInfoCubit()),
     BlocProvider<UserCubit>(create: (context) => UserCubit()),
     BlocProvider(create: (context) => GpaCubit()),
   ], child: MyApp()));

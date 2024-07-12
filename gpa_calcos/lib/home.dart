@@ -101,14 +101,14 @@ class _HomePageState extends State<HomePage> {
                         'LogIn',
                         style: TextStyle(
                           color: MainColors.color4,
-                          fontSize: 15.sp,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ),
             SizedBox(
-              width: 10.h,
+              width: 15.h,
             ),
           ],
           leading: IconButton(
@@ -300,7 +300,7 @@ class _HomePageState extends State<HomePage> {
               text,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 17.sp,
+                fontSize: 19.sp,
                 fontWeight: FontWeight.w500,
                 color: Colors.white,
               ),
@@ -310,5 +310,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
 }

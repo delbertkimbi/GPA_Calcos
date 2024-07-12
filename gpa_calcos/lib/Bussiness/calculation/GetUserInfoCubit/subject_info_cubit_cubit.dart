@@ -1,10 +1,12 @@
+
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gpa_calcos/Data/models/subjects.dart';
 
-part 'gpa_state.dart';
+part 'subject_info_cubit_state.dart';
 
-class GpaCubit extends Cubit<List<Subject>> {
-  GpaCubit() : super([]);
+class SubjectInfoCubit extends Cubit<List<Subject>> {
+  SubjectInfoCubit() : super([]);
   addSubject(String name, String grade, double creditValue) {
     final subject = Subject(
       name: name,
@@ -21,24 +23,6 @@ class GpaCubit extends Cubit<List<Subject>> {
     final newState = List<Subject>.from(state)..removeAt(index);
     emit(newState);
   }
-
-  List<double> calculateGPA() {
-    double totalCredits = 0;
-    double totalGradePoints = 0;
-
-    for (var subject in state) {
-      totalCredits += subject.creditValue;
-      totalGradePoints +=
-          _calculateGradePoints(subject.grade!) * subject.creditValue;
-    }
-
-    if (totalCredits > 0) {
-      return [totalGradePoints / totalCredits, totalGradePoints, totalCredits];
-    } else {
-      return [0.0, 0.0, 0.0];
-    }
-  }
-
   double _calculateGradePoints(String grade) {
     switch (grade) {
       case 'A':
@@ -61,4 +45,21 @@ class GpaCubit extends Cubit<List<Subject>> {
         return -1;
     }
   }
+    List<double> calculateGPA() {
+    double totalCredits = 0;
+    double totalGradePoints = 0;
+
+    for (var subject in state) {
+      totalCredits += subject.creditValue;
+      totalGradePoints +=
+          _calculateGradePoints(subject.grade!) * subject.creditValue;
+    }
+
+    if (totalCredits > 0) {
+      return [totalGradePoints / totalCredits, totalGradePoints, totalCredits];
+    } else {
+      return [0.0, 0.0, 0.0];
+    }
+  }
 }
+
