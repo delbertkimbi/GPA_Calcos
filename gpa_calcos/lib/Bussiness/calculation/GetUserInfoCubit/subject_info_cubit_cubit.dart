@@ -45,7 +45,7 @@ class SubjectInfoCubit extends Cubit<List<Subject>> {
         return -1;
     }
   }
-    List<double> calculateGPA() {
+    double calculateGPA() {
     double totalCredits = 0;
     double totalGradePoints = 0;
 
@@ -56,9 +56,9 @@ class SubjectInfoCubit extends Cubit<List<Subject>> {
     }
 
     if (totalCredits > 0) {
-      return [totalGradePoints / totalCredits, totalGradePoints, totalCredits];
+      return totalGradePoints / totalCredits;
     } else {
-      return [0.0, 0.0, 0.0];
+      return 0.0;
     }
   }
 }
