@@ -18,13 +18,14 @@ class IndividaulGoals extends StatefulWidget {
 }
 
 class _IndividaulGoalsState extends State<IndividaulGoals> {
-  List<String> grades = ['A', 'B', 'B+', 'C', 'C+', 'D', 'D+', 'F'];
+  List<String> grades = ['A', 'B', 'B+', 'C+', 'C', 'D+', 'D', 'F'];
   bool viewAll = false;
   int tappedIndex = -1;
   bool isGradeTapped = false;
   TextEditingController subjectNameController = TextEditingController();
 
   TextEditingController creditValueNameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SubjectInfoCubit, List<Subject>>(
@@ -51,7 +52,7 @@ class _IndividaulGoalsState extends State<IndividaulGoals> {
           backgroundColor: MainColors.color4,
           body: Padding(
             padding: EdgeInsets.all(10.r),
-            child: ListView(
+            child: Column(
               children: [
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 30.r),
@@ -100,30 +101,40 @@ class _IndividaulGoalsState extends State<IndividaulGoals> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       _columnText(
-                        text: 'Semester',
-                        style: _semester1Style,
-                        gpa: '3.5',
-                        grade: 'B+',
-                      ),
+                          text: 'Semester',
+                          style: _semester1Style,
+                          gpa: BlocProvider.of<SubjectInfoCubit>(context)
+                              .calculateGPA()
+                              .toString(),
+                          grade: BlocProvider.of<SubjectInfoCubit>(context)
+                              .totalGpaValueGrade()),
                       _columnText(
                         text: 'Cumulative',
                         style: _semester2Style,
-                        gpa: '3.5',
-                        grade: 'B+',
+                        gpa: BlocProvider.of<SubjectInfoCubit>(context)
+                            .calculateGPA()
+                            .toString(),
+                        grade: BlocProvider.of<SubjectInfoCubit>(context)
+                            .totalGpaValueGrade(),
                       ),
                       SizedBox(
                         height: 100.h,
                         child: CircularPercentIndicator(
                           radius: 35.h,
                           lineWidth: 4.h,
-                          percent: 0.8,
+                          percent: BlocProvider.of<SubjectInfoCubit>(context)
+                                  .calculateGPA() /
+                              4,
                           progressColor: MainColors.color1,
                           center: SizedBox(
                             height: 70.h,
                             child: CircularPercentIndicator(
                               radius: 24.h,
                               lineWidth: 4.h,
-                              percent: 0.8,
+                              percent:
+                                  BlocProvider.of<SubjectInfoCubit>(context)
+                                          .calculateGPA() /
+                                      4,
                               progressColor: Colors.red,
                             ),
                           ),
@@ -135,247 +146,297 @@ class _IndividaulGoalsState extends State<IndividaulGoals> {
                 SizedBox(
                   height: 20.h,
                 ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: state.length,
-                  itemBuilder: (context, index) {
-                    final subject = state[index];
-                    return Column(
-                      children: [
-                        Container(
-                            padding: EdgeInsets.all(15.r),
-                            height: viewAll ? 100.h : 150.h,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10.h),
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      subject.name,
-                                      style: TextStyle(
-                                        color: MainColors.color2,
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.w400,
+                Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: state.length,
+                    itemBuilder: (context, index) {
+                      final subject = state[index];
+                      return Column(
+                        children: [
+                          Container(
+                              padding: EdgeInsets.all(15.r),
+                              height: viewAll ? 100.h : 150.h,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.h),
+                              ),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        subject.name,
+                                        style: TextStyle(
+                                          color: MainColors.color2,
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
                                       ),
-                                    ),
-                                    viewAll
-                                        ? GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                viewAll = !viewAll;
-                                              });
-                                            },
-                                            child: Icon(
-                                              Icons.arrow_back_ios_new,
-                                              color: MainColors.color2,
-                                              size: 18.sp,
-                                            ),
-                                          )
-                                        : GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                viewAll = !viewAll;
-                                              });
-                                            },
-                                            child: Icon(
-                                              Icons.keyboard_arrow_down,
-                                              color: MainColors.color2,
-                                              size: 25.sp,
-                                            ),
-                                          ),
-                                  ],
-                                ),
-                                const Divider(),
-                                Expanded(
-                                  child: ListView.builder(
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: grades.length,
-                                    itemBuilder: (context, index) {
-                                      return Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                isGradeTapped = !isGradeTapped;
-                                                tappedIndex = index;
-                                                state[index].grade = grades[index];
-                                              });
-                                            },
-                                            child: Container(
-                                              width: 35.r,
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                color: subject.grade== grades[index]
-                                                    ? MainColors.color4
-                                                    : Colors.white,
-                                                shape: BoxShape.circle,
+                                      viewAll
+                                          ? GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  viewAll = !viewAll;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.arrow_back_ios_new,
+                                                color: MainColors.color2,
+                                                size: 18.sp,
                                               ),
-                                              child: Text(
-                                                grades[index],
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 18.sp,
-                                                  color: MainColors.color1,
+                                            )
+                                          : GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  viewAll = !viewAll;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.keyboard_arrow_down,
+                                                color: MainColors.color2,
+                                                size: 25.sp,
+                                              ),
+                                            ),
+                                    ],
+                                  ),
+                                  const Divider(),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: grades.length,
+                                      itemBuilder: (context, index) {
+                                        return Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  if (subject.grade !=
+                                                      grades[index]) {
+                                                    isGradeTapped = true;
+                                                    tappedIndex = index;
+                                                    subject.grade =
+                                                        grades[index];
+                                                  }
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 20.r,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                  color: subject.grade ==
+                                                          grades[index]
+                                                      ? MainColors.color4
+                                                      : Colors.white,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: Text(
+                                                  grades[index],
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 18.sp,
+                                                    color: MainColors.color1,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            width: 28.w,
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                viewAll
-                                    ? Container()
-                                    : Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          _columnTextIcon(
-                                            text: 'Rename',
-                                            icon: Icons.edit,
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return Dialog(
-                                                    child: Container(
-                                                      height: 100.h,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.r),
-                                                      ),
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            'Are you sure?',
-                                                            style: TextStyle(
-                                                              color: MainColors
-                                                                  .color1,
-                                                              fontSize: 20.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 20.w,
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              GestureDetector(
-                                                                onTap: () =>
-                                                                    Navigator.of(
-                                                                            context)
-                                                                        .pop(),
-                                                                child: Text(
-                                                                  'No',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: MainColors
-                                                                        .color1,
-                                                                    fontSize:
-                                                                        18.sp,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 40.w,
-                                                              ),
-                                                              GestureDetector(
-                                                                onTap: () {
-                                                                  setState(() {
-                                                                    state.remove(
-                                                                        subject);
-                                                                  });
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop();
-                                                                },
-                                                                child: Text(
-                                                                  'Yes',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .red,
-                                                                    fontSize:
-                                                                        18.sp,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                  ),
-                                                                ),
-                                                              )
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                            child: _columnTextIcon(
-                                              text: 'Delete',
-                                              icon: Icons.delete,
+                                            SizedBox(
+                                              width: 28.w,
                                             ),
-                                          ),
-                                          _columnTextIcon(
-                                            text: 'Reset',
-                                            icon: Icons.refresh,
-                                          ),
-                                        ],
-                                      )
-                              ],
-                            )),
-                        SizedBox(
-                          height: 15.h,
-                        ),
-                      ],
-                    );
-                  },
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5.h,
+                                  ),
+                                  viewAll
+                                      ? Container()
+                                      : Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                updateName(
+                                                    context, state, subject);
+                                              },
+                                              child: _columnTextIcon(
+                                                text: 'Rename',
+                                                icon: Icons.edit,
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                deleteSubject(
+                                                    context, state, subject);
+                                              },
+                                              child: _columnTextIcon(
+                                                text: 'Delete',
+                                                icon: Icons.delete,
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  state[index].grade = ' ';
+                                                });
+                                              },
+                                              child: _columnTextIcon(
+                                                text: 'Reset',
+                                                icon: Icons.refresh,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                ],
+                              )),
+                          SizedBox(
+                            height: 15.h,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
                 SizedBox(
                   height: 15.h,
                 ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<dynamic> updateName(
+      BuildContext context, List<Subject> state, Subject subject) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              height: 150.h,
+              padding: EdgeInsets.all(10.r),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20.r),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  CustomTextField(
+                    onChaged: (value) {},
+                    text: 'Subject Name',
+                    controller: subjectNameController,
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        subject.name = subjectNameController.text;
+                      });
+                    },
+                    child: RegisterButton(
+                      textSize: 18.sp,
+                      text: 'update',
+                      color: MainColors
+                          .color1, // Disable button or change color on error
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  Future<dynamic> deleteSubject(
+      BuildContext context, List<Subject> state, Subject subject) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: Container(
+            height: 100.h,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.r),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Are you sure?',
+                  style: TextStyle(
+                    color: MainColors.color1,
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(
+                  height: 20.w,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).pop(),
+                      child: Text(
+                        'No',
+                        style: TextStyle(
+                          color: MainColors.color1,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 40.w,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          state.remove(subject);
+                        });
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        'Yes',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    )
+                  ],
+                )
               ],
             ),
           ),
@@ -462,7 +523,7 @@ class _IndividaulGoalsState extends State<IndividaulGoals> {
                       onTap: () {
                         BlocProvider.of<SubjectInfoCubit>(context).addSubject(
                             subjectNameController.text,
-                            'A',
+                            ' ',
                             double.parse(
                                 creditValueNameController.text.toString()));
                       },

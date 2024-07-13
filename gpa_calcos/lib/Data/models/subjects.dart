@@ -1,5 +1,5 @@
 class Subject {
-  final String name;
+  String name;
   String grade;
   final double creditValue;
 
