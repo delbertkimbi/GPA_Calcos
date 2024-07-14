@@ -41,7 +41,7 @@ class SubjectInfoCubit extends Cubit<List<Subject>> {
       case 'F':
         return 0.0;
       default:
-        return 0;
+        return 0.0;
     }
   }
 
@@ -69,19 +69,19 @@ class SubjectInfoCubit extends Cubit<List<Subject>> {
     switch (calculateGPA()) {
       case 4.0:
         return 'A';
-      case 3.5:
+      case >= 3.5 && < 4.0:
         return 'B+';
-      case 3.0:
+      case >= 3.0 && < 3.5:
         return 'B';
-      case 2.5:
+      case >= 2.5 && < 3.0:
         return 'C+';
-      case 2.0:
+      case >= 2.0 && < 2.5:
         return 'C';
-      case 1.5:
+      case >= 1.5 && < 2.0:
         return 'D+';
-      case 1.0:
+      case >= 1.0 && < 2.0:
         return 'D';
-      case 0.0:
+      case >= 0.0 && < 1.0:
         return 'F';
       default:
         return '';
