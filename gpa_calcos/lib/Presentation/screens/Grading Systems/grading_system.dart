@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gpa_calcos/Presentation/Custom/Widgets/push_pop.dart';
 import 'package:gpa_calcos/Presentation/Custom/files/colors.dart';
 import 'package:gpa_calcos/Presentation/Routes/app_router.gr.dart';
-import 'package:gpa_calcos/Presentation/screens/customized.dart';
+import 'package:gpa_calcos/Presentation/screens/coming_soon.dart';
 
 @RoutePage()
 class GradingSystem extends StatefulWidget {
@@ -163,7 +163,9 @@ class _GradingSystemState extends State<GradingSystem> {
               ),
               ElevatedButton(
                 onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const CustomizedPage(),
+                  builder: (context) => const CustomizedPage(
+                    title: ' Other Systems',
+                  ),
                 )),
                 style: ElevatedButton.styleFrom(
                   elevation: 0,

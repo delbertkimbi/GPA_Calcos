@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gpa_calcos/Presentation/Custom/files/Toast/showtoast.dart';
 import 'package:gpa_calcos/Presentation/Custom/files/colors.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -229,7 +230,8 @@ class _ResultPageState extends State<ResultPage> {
             text: 'My GPA calculated by GPA Calcos');
       } else {
         // Handle permission denied scenario (optional)
-        print('Storage permission denied');
+        showToast(message: 'Storage permission denied');
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content:
@@ -240,7 +242,7 @@ class _ResultPageState extends State<ResultPage> {
       }
     } else {
       // Handle scenario where screenshot capture fails (optional)
-      print('Failed to capture screenshot');
+      showToast(message: 'Failed to capture screenshot');
     }
   }
 }

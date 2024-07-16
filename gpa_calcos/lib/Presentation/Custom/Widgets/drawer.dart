@@ -11,7 +11,7 @@ import 'package:gpa_calcos/Presentation/screens/about.dart';
 import 'package:gpa_calcos/Presentation/screens/auth/auth_services.dart';
 
 import 'package:gpa_calcos/Presentation/screens/chat.dart';
-import 'package:gpa_calcos/Presentation/screens/customized.dart';
+import 'package:gpa_calcos/Presentation/screens/coming_soon.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({
@@ -162,7 +162,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
                 GestureDetector(
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const CustomizedPage(),
+                    builder: (context) => const CustomizedPage(
+                      title: 'Did you Know?',
+                    ),
                   )),
                   child: CustomListTile(
                     title: "Did you Know?",
@@ -228,6 +230,4 @@ class _CustomDrawerState extends State<CustomDrawer> {
       ),
     );
   }
-
-  
 }

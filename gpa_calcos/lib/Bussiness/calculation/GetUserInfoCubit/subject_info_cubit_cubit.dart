@@ -41,7 +41,11 @@ class SubjectInfoCubit extends Cubit<List<Subject>> {
       case 'F':
         return 0.0;
       default:
+<<<<<<< HEAD
         return 0;
+=======
+        return 0.0;
+>>>>>>> gpa_goals
     }
   }
 
@@ -53,7 +57,11 @@ class SubjectInfoCubit extends Cubit<List<Subject>> {
     for (var subject in state) {
       totalCredits += subject.creditValue;
       totalGradePoints +=
+<<<<<<< HEAD
           _calculateGradePoints(subject.grade!) * subject.creditValue;
+=======
+          _calculateGradePoints(subject.grade) * subject.creditValue;
+>>>>>>> gpa_goals
     }
 
     if (totalCredits > 0) {
@@ -69,6 +77,7 @@ class SubjectInfoCubit extends Cubit<List<Subject>> {
     switch (calculateGPA()) {
       case 4.0:
         return 'A';
+<<<<<<< HEAD
       case 3.5:
         return 'B+';
       case 3.0:
@@ -82,6 +91,21 @@ class SubjectInfoCubit extends Cubit<List<Subject>> {
       case 1.0:
         return 'D';
       case 0.0:
+=======
+      case >= 3.5 && < 4.0:
+        return 'B+';
+      case >= 3.0 && < 3.5:
+        return 'B';
+      case >= 2.5 && < 3.0:
+        return 'C+';
+      case >= 2.0 && < 2.5:
+        return 'C';
+      case >= 1.5 && < 2.0:
+        return 'D+';
+      case >= 1.0 && < 2.0:
+        return 'D';
+      case >= 0.0 && < 1.0:
+>>>>>>> gpa_goals
         return 'F';
       default:
         return '';
