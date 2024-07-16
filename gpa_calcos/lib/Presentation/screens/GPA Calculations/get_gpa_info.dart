@@ -67,7 +67,7 @@ class _GetSubjectInfoState extends State<GetSubjectInfo> {
               height: 15.w,
             ),
             if (creditValueNameController.text.isEmpty)
-<<<<<<< HEAD
+
          SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -280,10 +280,7 @@ class _GetSubjectInfoState extends State<GetSubjectInfo> {
               ),
               SizedBox(
                 height: 15.h,
-              ),
-=======
->>>>>>> gpa_goals
-              BlocBuilder<GpaCubit, List<Subject>>(
+              ),     BlocBuilder<GpaCubit, List<Subject>>(
                 builder: (context, subjects) {
                   return Visibility(
                     visible: subjects
