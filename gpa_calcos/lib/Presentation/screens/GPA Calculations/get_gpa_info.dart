@@ -61,15 +61,13 @@ class _GetSubjectInfoState extends State<GetSubjectInfo> {
       ),
       body: Padding(
         padding: EdgeInsets.all(10.r),
-<<<<<<< HEAD
         child: ListView(
           children: [
             SizedBox(
               height: 15.w,
             ),
             if (creditValueNameController.text.isEmpty)
-=======
-        child: SingleChildScrollView(
+         SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -179,7 +177,7 @@ class _GetSubjectInfoState extends State<GetSubjectInfo> {
                                   width: 12.h,
                                 ),
                                 Text(
-                                  subject.grade!,
+                                  subject.grade,
                                   style: TextStyle(
                                     fontSize: 16.sp,
                                     color: MainColors.color1,
@@ -282,8 +280,6 @@ class _GetSubjectInfoState extends State<GetSubjectInfo> {
               SizedBox(
                 height: 15.h,
               ),
-
->>>>>>> parent of ea01646 (can choose grades)
               BlocBuilder<GpaCubit, List<Subject>>(
                 builder: (context, subjects) {
                   return Visibility(
@@ -524,7 +520,8 @@ class _GetSubjectInfoState extends State<GetSubjectInfo> {
             // ),
           ],
         ),
-      ),
+      ),]
+    ),),
     );
   }
 
